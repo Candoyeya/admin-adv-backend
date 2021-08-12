@@ -76,7 +76,7 @@ const updateDoctor = async (req, res = response) => {
     res.status(500).json({
       ok: false,
       msg: "Unexpected error, check logs"
-    })
+    });
   }
 };
 

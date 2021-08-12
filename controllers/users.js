@@ -78,9 +78,6 @@ const updateUser = async (req, res = response) => {
         msg: "User not found"
       })
     }
-
-    // TODO: Validate Token and user correct
-
     
     // Update user
     // Check fields
@@ -95,13 +92,20 @@ const updateUser = async (req, res = response) => {
       }
     }
 
-    fields.email = email;
+    if(!user.google){
+      fields.email = email;
+    } else if(user.email !== email) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Google users cannot change email"
+      })
+    }
 
     const userUpdated = await Users.findByIdAndUpdate(uid, fields, {new: true});
 
     res.json({
       ok:true,
-      userUpdated
+      user: userUpdated
     });
   } catch (error) {
     console.log(error);
