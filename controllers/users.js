@@ -112,7 +112,7 @@ const updateUser = async (req, res = response) => {
     res.status(500).json({
       ok: false,
       msg: "Unexpected error, check logs"
-    })
+    });
   }
 };
 
@@ -125,6 +125,11 @@ const deleteUser = async (req, res = response) => {
       return res.status(404).json({
         ok: false,
         msg: "User not found"
+      })
+    } else if(user.uid === uid ) {
+      return res.status(400).json({
+        ok: false,
+        msg: "You cannot erase yourself"
       })
     }
 
