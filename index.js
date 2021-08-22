@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors')
 const { dbConnection } = require('./database/config');
@@ -24,6 +25,11 @@ app.use('/api/doctors', require('./routes/doctors'));
 app.use('/api/all', require('./routes/searches'));
 app.use('/api/uploads', require('./routes/uploads'));
 app.use('/api/login', require('./routes/auth'));
+
+// Routes Admin
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public/index.html'));
+});
 
 app.listen( process.env.PORT || 3000, () => {
   console.log('Server Listen in port: ' + process.env.PORT);
